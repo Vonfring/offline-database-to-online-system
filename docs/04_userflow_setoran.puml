@@ -1,0 +1,43 @@
+@startuml userflow_setoran
+!include common.iuml
+skinparam activity {
+  BackgroundColor #EAF1FB
+  BorderColor #2F5496
+  DiamondBackgroundColor #FFF2CC
+  DiamondBorderColor #BF9000
+}
+title User Flow 2 — Pencatatan Setoran Barang (Staf)
+
+|Staf|
+start
+:Login ke sistem;
+:Memilih menu **Transaksi > Setoran**;
+:Menekan tombol **Tambah Setoran**;
+if (Supplier sudah terdaftar?) then (ya)
+  :Memilih supplier\ndari daftar;
+else (tidak)
+  :Menambahkan data\nsupplier baru;
+endif
+:Memilih jenis plastik\ndan mengisi berat (kg);
+|Sistem|
+:Mengambil harga yang berlaku\ndan menghitung subtotal;
+|Staf|
+if (Ada jenis plastik lain?) then (ya)
+  :Menambah baris\njenis plastik;
+  |Sistem|
+  :Menghitung ulang total;
+  |Staf|
+else (tidak)
+endif
+:Memeriksa total berat & nilai;
+:Menekan tombol **Simpan**;
+|Sistem|
+:Menyimpan transaksi\nke database;
+:Mencatat log aktivitas;
+|Staf|
+if (Perlu cetak nota?) then (ya)
+  :Mencetak nota timbang (PDF);
+else (tidak)
+endif
+stop
+@enduml

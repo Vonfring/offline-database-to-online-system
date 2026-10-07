@@ -1,0 +1,152 @@
+@startuml erd
+!include common.iuml
+hide circle
+hide methods
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 70
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #2F5496
+  HeaderBackgroundColor #D9E2F3
+  FontStyle bold
+  AttributeFontSize 11
+}
+title Entity Relationship Diagram (ERD)\nDatabase PostgreSQL — Sistem Database Online
+
+entity "pengguna" as pengguna {
+  * id : bigint <<PK>>
+  --
+  * nama : varchar(100)
+  * email : varchar(100) <<unique>>
+  * password : varchar(255)
+  * peran : varchar(10) (admin/staf)
+  * aktif : boolean
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "supplier" as supplier {
+  * id : bigint <<PK>>
+  --
+  * kode_supplier : varchar(20) <<unique>>
+  * nama : varchar(100)
+  kategori : varchar(30) (pengumpul/UMKM/pengelola sampah)
+  no_hp : varchar(20)
+  alamat : text
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "pembeli" as pembeli {
+  * id : bigint <<PK>>
+  --
+  * kode_pembeli : varchar(20) <<unique>>
+  * nama : varchar(100)
+  perusahaan : varchar(100)
+  no_hp : varchar(20)
+  alamat : text
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "jenis_plastik" as jenis {
+  * id : bigint <<PK>>
+  --
+  * kode : varchar(10) <<unique>> (PET/HDPE/LDPE/ABS)
+  * nama : varchar(100)
+  * satuan : varchar(10) (kg)
+  keterangan : text
+}
+
+entity "harga_plastik" as harga {
+  * id : bigint <<PK>>
+  --
+  * jenis_plastik_id : bigint <<FK>>
+  * harga_beli_per_kg : numeric(12,2)
+  * harga_jual_per_kg : numeric(12,2)
+  * berlaku_mulai : date
+}
+
+entity "setoran" as setoran {
+  * id : bigint <<PK>>
+  --
+  * no_setoran : varchar(30) <<unique>>
+  * tanggal : date
+  * supplier_id : bigint <<FK>>
+  * pengguna_id : bigint <<FK>>
+  * total_berat_kg : numeric(12,2)
+  * total_nilai : numeric(14,2)
+  sumber_data : varchar(10) (input/impor)
+  catatan : text
+  created_at : timestamp
+}
+
+entity "detail_setoran" as dsetoran {
+  * id : bigint <<PK>>
+  --
+  * setoran_id : bigint <<FK>>
+  * jenis_plastik_id : bigint <<FK>>
+  * berat_kg : numeric(12,2)
+  * harga_per_kg : numeric(12,2)
+  * subtotal : numeric(14,2)
+}
+
+entity "penjualan" as penjualan {
+  * id : bigint <<PK>>
+  --
+  * no_penjualan : varchar(30) <<unique>>
+  * tanggal : date
+  * pembeli_id : bigint <<FK>>
+  * pengguna_id : bigint <<FK>>
+  * total_berat_kg : numeric(12,2)
+  * total_nilai : numeric(14,2)
+  sumber_data : varchar(10) (input/impor)
+  catatan : text
+  created_at : timestamp
+}
+
+entity "detail_penjualan" as dpenjualan {
+  * id : bigint <<PK>>
+  --
+  * penjualan_id : bigint <<FK>>
+  * jenis_plastik_id : bigint <<FK>>
+  * berat_kg : numeric(12,2)
+  * harga_per_kg : numeric(12,2)
+  * subtotal : numeric(14,2)
+}
+
+entity "log_impor" as limpor {
+  * id : bigint <<PK>>
+  --
+  * pengguna_id : bigint <<FK>>
+  * nama_file : varchar(255)
+  * jenis_data : varchar(30)
+  * jumlah_baris : integer
+  * jumlah_berhasil : integer
+  * jumlah_gagal : integer
+  created_at : timestamp
+}
+
+entity "log_aktivitas" as laktivitas {
+  * id : bigint <<PK>>
+  --
+  * pengguna_id : bigint <<FK>>
+  * aksi : varchar(20) (tambah/ubah/hapus)
+  * nama_tabel : varchar(50)
+  * data_id : bigint
+  created_at : timestamp
+}
+
+supplier ||--o{ setoran : melakukan
+setoran ||--|{ dsetoran : memiliki
+jenis ||--o{ dsetoran : "dicatat pada"
+pembeli ||--o{ penjualan : melakukan
+penjualan ||--|{ dpenjualan : memiliki
+jenis ||--o{ dpenjualan : "dicatat pada"
+jenis ||--o{ harga : "memiliki riwayat"
+pengguna ||--o{ setoran : mencatat
+pengguna ||--o{ penjualan : mencatat
+pengguna ||--o{ limpor : melakukan
+pengguna ||--o{ laktivitas : menghasilkan
+@enduml

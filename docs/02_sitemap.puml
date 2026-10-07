@@ -1,0 +1,61 @@
+@startwbs sitemap
+!include common.iuml
+<style>
+wbsDiagram {
+  node {
+    BackgroundColor #EAF1FB
+    LineColor #2F5496
+    RoundCorner 8
+    Padding 6
+    FontSize 12
+  }
+  :depth(0) {
+    BackgroundColor #2F5496
+    FontColor #FFFFFF
+    FontStyle bold
+  }
+  :depth(1) {
+    BackgroundColor #D9E2F3
+    FontStyle bold
+  }
+  .admin {
+    BackgroundColor #FCE9D9
+    LineColor #C55A11
+  }
+  arrow {
+    LineColor #555555
+  }
+}
+</style>
+title Sitemap Sistem Database Online\n(kotak oranye = khusus Admin)
+
+* Halaman Login
+** Dashboard
+*** Ringkasan setoran & penjualan
+*** Total per jenis plastik
+** Data Master
+*** Supplier / Pengumpul
+*** Pembeli
+*** Jenis Plastik & Harga <<admin>>
+** Transaksi
+*** Setoran (Penerimaan)
+**** Daftar setoran
+**** Tambah / ubah setoran
+**** Cetak nota timbang
+*** Penjualan
+**** Daftar penjualan
+**** Tambah / ubah penjualan
+** Impor Data (Migrasi) <<admin>>
+*** Unggah file Excel/CSV <<admin>>
+*** Pratinjau & validasi <<admin>>
+*** Riwayat impor <<admin>>
+** Laporan
+*** Laporan setoran
+*** Laporan penjualan
+*** Ekspor Excel / PDF
+** Pengaturan <<admin>>
+*** Pengguna & hak akses <<admin>>
+*** Backup data <<admin>>
+*** Log aktivitas <<admin>>
+** Profil & Logout
+@endwbs

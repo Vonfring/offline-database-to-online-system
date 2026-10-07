@@ -1,0 +1,63 @@
+@startuml use_case
+!include common.iuml
+left to right direction
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor #EAF1FB
+  BorderColor #2F5496
+}
+skinparam rectangle {
+  BorderColor #2F5496
+  BackgroundColor #FFFFFF
+  FontStyle bold
+}
+skinparam actor {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+title Use Case Diagram\nSistem Database Online PT Fathoni Factory Group
+
+actor "Staf" as Staf
+actor "Admin" as Admin
+Staf <|-- Admin
+
+rectangle "Sistem Database Online" {
+  usecase "Login" as UC_Login
+  usecase "Melihat Dashboard\nRingkasan Data" as UC_Dash
+  usecase "Mengelola Data\nSupplier & Pembeli" as UC_Master
+  usecase "Mencatat Transaksi\nSetoran (Penerimaan)" as UC_Setor
+  usecase "Mencatat Transaksi\nPenjualan" as UC_Jual
+  usecase "Mencari & Memfilter\nData" as UC_Cari
+  usecase "Melihat Laporan" as UC_Lap
+  usecase "Mencetak Nota Timbang" as UC_Nota
+  usecase "Mengekspor Laporan\n(Excel/PDF)" as UC_Ekspor
+  usecase "Mengelola Jenis Plastik\n& Harga" as UC_Jenis
+  usecase "Mengimpor Data\nOffline (Excel/CSV)" as UC_Impor
+  usecase "Memvalidasi Data\nImpor" as UC_Valid
+  usecase "Mengelola Pengguna\n& Hak Akses" as UC_User
+  usecase "Melakukan Backup Data" as UC_Backup
+  usecase "Melihat Log Aktivitas" as UC_Log
+}
+
+Staf --> UC_Login
+Staf --> UC_Dash
+Staf --> UC_Master
+Staf --> UC_Setor
+Staf --> UC_Jual
+Staf --> UC_Cari
+Staf --> UC_Lap
+UC_Setor <.. UC_Nota : <<extend>>
+UC_Lap <.. UC_Ekspor : <<extend>>
+
+Admin --> UC_Jenis
+Admin --> UC_Impor
+Admin --> UC_User
+Admin --> UC_Backup
+Admin --> UC_Log
+UC_Impor ..> UC_Valid : <<include>>
+
+legend bottom left
+  Seluruh use case selain Login hanya dapat diakses setelah Login.
+  Admin mewarisi semua hak akses Staf (generalisasi).
+endlegend
+@enduml

@@ -1,0 +1,30 @@
+@startuml userflow_laporan
+!include common.iuml
+skinparam activity {
+  BackgroundColor #EAF1FB
+  BorderColor #2F5496
+  DiamondBackgroundColor #FFF2CC
+  DiamondBorderColor #BF9000
+}
+title User Flow 3 — Melihat dan Mengekspor Laporan (Admin/Staf)
+
+|Pengguna|
+start
+:Login ke sistem;
+:Memilih menu **Laporan**;
+:Memilih jenis laporan\n(setoran / penjualan);
+:Menentukan periode\ndan filter (supplier, jenis plastik);
+|Sistem|
+:Mengambil data dari database\ndan menyusun laporan;
+:Menampilkan tabel dan total;
+|Pengguna|
+if (Ingin mengekspor?) then (ya)
+  :Memilih format\nExcel atau PDF;
+  |Sistem|
+  :Membuat file laporan;
+  |Pengguna|
+  :Mengunduh file;
+else (tidak)
+endif
+stop
+@enduml

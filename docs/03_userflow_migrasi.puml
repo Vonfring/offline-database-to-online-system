@@ -1,0 +1,42 @@
+@startuml userflow_migrasi
+!include common.iuml
+skinparam activity {
+  BackgroundColor #EAF1FB
+  BorderColor #2F5496
+  DiamondBackgroundColor #FFF2CC
+  DiamondBorderColor #BF9000
+}
+skinparam partition {
+  BorderColor #2F5496
+}
+title User Flow 1 — Migrasi Data Offline ke Database Online (Admin)
+
+|Admin|
+start
+:Membuka website dan login;
+:Masuk ke Dashboard;
+:Memilih menu **Impor Data**;
+:Memilih jenis data\n(supplier, pembeli, setoran, dll.);
+:Mengunggah file Excel/CSV;
+|Sistem|
+:Membaca isi file dan\nmencocokkan kolom;
+:Memvalidasi data\n(format, data kosong, data ganda);
+:Menampilkan pratinjau\nbaris valid dan tidak valid;
+|Admin|
+if (Ada data tidak valid?) then (ya)
+  :Memperbaiki file\ndi Excel;
+  :Mengunggah ulang file;
+  |Sistem|
+  :Memvalidasi ulang data;
+  |Admin|
+else (tidak)
+endif
+:Menekan tombol **Konfirmasi Impor**;
+|Sistem|
+:Menyimpan data ke database\nPostgreSQL (Supabase);
+:Mencatat riwayat impor\n(jumlah berhasil/gagal);
+:Menampilkan ringkasan hasil impor;
+|Admin|
+:Memeriksa data di menu terkait;
+stop
+@enduml
