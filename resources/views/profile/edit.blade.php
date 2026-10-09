@@ -4,7 +4,7 @@
 
 @section('konten')
 <div class="kepala-halaman">
-    <h1 class="judul-serif">Profil Saya</h1>
+    <h1 class="judul-halaman">Profil Saya</h1>
     <p>Perbarui nama, email, dan kata sandi akun Anda.</p>
 </div>
 

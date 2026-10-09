@@ -1,9 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@phosphor-icons/web/regular';
 import '@phosphor-icons/web/bold';
-import '@fontsource-variable/geist';
+import '@fontsource-variable/plus-jakarta-sans';
 import '@fontsource/geist-mono/400.css';
-import '@fontsource/instrument-serif/400.css';
 import '../css/app.css';
 
 import * as bootstrap from 'bootstrap';

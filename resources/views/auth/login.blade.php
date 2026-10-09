@@ -6,7 +6,7 @@
 <div class="kartu-masuk muncul">
     <div class="text-center mb-4">
         <span class="brand-mark mx-auto mb-3" style="width:44px;height:44px;font-size:1.4rem"><i class="ph-bold ph-recycle"></i></span>
-        <h1 class="judul-serif mb-1" style="font-size:2.1rem">Sistem Database Online</h1>
+        <h1 class="judul-halaman mb-1" style="font-size:1.75rem">Sistem Database Online</h1>
         <p class="text-redup mb-0 small">PT Fathoni Factory Group &middot; Pengelolaan plastik daur ulang</p>
     </div>
 

@@ -9,7 +9,7 @@
                 @endforeach
             </nav>
         @endif
-        <h1 class="judul-serif">{{ $judul }}</h1>
+        <h1 class="judul-halaman">{{ $judul }}</h1>
         @if ($deskripsi)
             <p>{{ $deskripsi }}</p>
         @endif
